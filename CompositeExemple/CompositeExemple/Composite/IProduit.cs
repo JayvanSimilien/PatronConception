@@ -2,6 +2,6 @@
 {
     public interface IProduit
     {
-        void AjouterQuantite(int quantite);
+        public decimal CalculerPrix();
     }
 }

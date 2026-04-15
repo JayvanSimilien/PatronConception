@@ -1,6 +1,6 @@
 ﻿namespace CompositeExemple.Composite;
 
-public class ProduitCompound
+public class ProduitCompound : IProduit
 {
     private readonly List<IProduit> _produits = [];
 
@@ -9,19 +9,19 @@ public class ProduitCompound
         _produits.Add(produit);
     }
 
-    public void RemoveProduit(int produit)
+    public void RemoveProduit(IProduit produit)
     {
-        IProduit? produitTrouve = _produits.FirstOrDefault(p => p is Produit p1 && p1.Id == produit);
-        if (produitTrouve == null) { return;}
-        _produits.Remove(produitTrouve);
+        _produits.Remove(produit);
     }
 
-    public void AjouterQuantite(int quantite)
+    public decimal CalculerPrix()
     {
+        decimal prixTotal = 0;
         foreach (var produit in _produits)
         {
-            produit.AjouterQuantite(quantite);
+            prixTotal += produit.CalculerPrix();
         }
+        return prixTotal;
     }
 
     public override string ToString()
@@ -29,7 +29,7 @@ public class ProduitCompound
         string result = "";
         foreach (var produit in _produits)
         {
-            result += produit.ToString() + "\n";
+            result += produit + "\n";
         }
         return result;
     }
